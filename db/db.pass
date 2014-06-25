@@ -1,0 +1,7 @@
+{
+	"database": {
+		"dbname": "screenshot-db",
+		"username": "screenshot-user",
+		"password": "3t4p4ssw0rd!"
+	}
+}
