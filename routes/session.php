@@ -8,15 +8,15 @@ $authenticate = function ($app) {
     return function () use ($app) {
 
     	// Check there is a user id and email set
-        // if (isset($_SESSION['userId']) && isset($_SESSION['userEmail'])) {
-        // 	$user = R::load('user', $_SESSION['userId']);
+        if (isset($_SESSION['userId']) && isset($_SESSION['userEmail'])) {
+        	$user = R::load('user', $_SESSION['userId']);
 
-        //     if($user->id == 0 || $user->email !== $_SESSION['userEmail']) {
-        //         $app->halt(401, 'Login Required.');
-        //     }
-        // } else {
-        //     $app->halt(401, 'Login Required.');
-        // }
+            if($user->id == 0 || $user->email !== $_SESSION['userEmail']) {
+                $app->halt(401, 'Login Required.');
+            }
+        } else {
+            $app->halt(401, 'Login Required.');
+        }
     };
 };
 
@@ -28,10 +28,10 @@ $app->group('/users', function () use ($app) {
 
         $loginData = json_decode($app->request->getBody());
 
-        $user = R::findOne( 'user', ' email = :email ', array(':email' => $app->request->post('email')));
+        $user = R::findOne( 'user', ' email = :email ', array(':email' => $loginData->email));
 
         // if($user->id != 0 && $user->password == hash('md5', $loginData->password)) {
-        if($user->id != 0) {
+        if($user && $user->id != 0) {
             $_SESSION['userId'] = $user->id;
             $_SESSION['userEmail'] = $user->email;
         } else {
