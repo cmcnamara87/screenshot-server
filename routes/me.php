@@ -1,5 +1,5 @@
 <?php
-// date_default_timezone_set("Australia/Brisbane");
+date_default_timezone_set("Australia/Brisbane");
 // define('PING_NEARBY_DISTANCE_METERS', 500);
 // define('PING_TIMEOUT_MINUTES', 30);
 // define('PING_PUSH_TIMEOUT_MINUTES', 1);
@@ -36,17 +36,6 @@ $app->group('/me', $authenticate($app), function () use ($app) {
 		echo json_encode(R::exportAll($files), JSON_NUMERIC_CHECK);
 	});
 
-	$app->get('/collections/:collectionId', function($collectionId) {
-		$collection = R::load('collection', $collectionId);
-		$expCollection = $collection->export();
-		unset($expCollection->ownFile);
-		echo json_encode($expCollection, JSON_NUMERIC_CHECK);
-	});
-
-	$app->get('/collections/:collectionId/files', function($collectionId) {
-		$collection = R::load('collection', $collectionId);
-		echo json_encode(R::exportAll($collection->sharedFileList), JSON_NUMERIC_CHECK);
-	});
 	$app->post('/collections/:collectionId/files', function($collectionId) use ($app) {
 		$fileData = json_decode($app->request->getBody());
 		$file = R::load('file', $fileData->id);

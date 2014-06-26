@@ -21,6 +21,18 @@ $app->get('/setup', function() {
 
 });
 
+$app->get('/collections/:collectionId', function($collectionId) {
+	$collection = R::load('collection', $collectionId);
+	$expCollection = $collection->export();
+	unset($expCollection->ownFile);
+	echo json_encode($expCollection, JSON_NUMERIC_CHECK);
+});
+
+$app->get('/collections/:collectionId/files', function($collectionId) {
+	$collection = R::load('collection', $collectionId);
+	echo json_encode(R::exportAll($collection->sharedFileList), JSON_NUMERIC_CHECK);
+});
+
 $app->get('/uploadtest', function () use ($app) {
 
     echo <<<__HTML
