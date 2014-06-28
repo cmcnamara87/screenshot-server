@@ -61,11 +61,11 @@ $app->group('/users', function () use ($app) {
      */
     $app->post('/register', function() use ($app) {
 
-        $sampleUserData = array(
-            'firstName'     => 'Craig',
-            'lastName'      => 'McNamara',
-            'email'         => 'cmcnamara87@gmail.com',
-        );
+        // $sampleUserData = array(
+        //     'firstName'     => 'Craig',
+        //     'lastName'      => 'McNamara',
+        //     'email'         => 'cmcnamara87@gmail.com',
+        // );
 
         $userData = json_decode($app->request->getBody());
         // $userData = $sampleUserData;
