@@ -30,6 +30,12 @@ $app->group('/me', $authenticate($app), function () use ($app) {
 		echo json_encode($user->export(), JSON_NUMERIC_CHECK);
 	});
 	
+	$app->get('/collections', function() {
+		$user = R::load('user', $_SESSION['userId']);
+		$collections = $user->ownCollectionList;
+		echo json_encode(R::exportAll($collections), JSON_NUMERIC_CHECK);
+	});
+
 	$app->get('/files', function() {
 		$user = R::load('user', $_SESSION['userId']);
 		$files = $user->ownFileList;
