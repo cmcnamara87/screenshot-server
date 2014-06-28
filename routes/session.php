@@ -28,6 +28,15 @@ $app->group('/users', function () use ($app) {
 
         $loginData = json_decode($app->request->getBody());
 
+        if(!$loginData) {
+            // post style
+            $loginData = json_decode(json_encode($app->request->post()));
+        } 
+        
+        // die();
+        // if(isset($loginData['email'])) {
+        //     $email = $loginData->email;
+        // }
         $user = R::findOne( 'user', ' email = :email ', array(':email' => $loginData->email));
 
         // if($user->id != 0 && $user->password == hash('md5', $loginData->password)) {
